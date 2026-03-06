@@ -170,9 +170,9 @@ if model is not None:
             Aplikasi ini menggunakan **YOLOv9** untuk mendeteksi penyakit pada daun kedelai.
             
             **Model dilatih dengan:**
-            - 📁 Dataset penyakit daun kedelai
-            - 🧠 Arsitektur YOLOv9
-            - 🔧 Framework Ultralytics
+            - Dataset penyakit daun kedelai
+            - Arsitektur YOLOv9
+            - Framework Ultralytics
             """)
         
         with tab2:
@@ -213,4 +213,5 @@ st.markdown(
     "<center>© 2026 | Deteksi Penyakit Daun Kedelai | Universitas Islam Indonesia</center>",
     unsafe_allow_html=True
 )
+
 
