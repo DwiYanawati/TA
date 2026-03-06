@@ -96,59 +96,68 @@ if model is not None:
                         st.warning("Tidak ada penyakit yang terdeteksi")
     
     # ============= MODE KAMERA REAL-TIME =============
-    elif menu == "📷 Kamera Real-time":
-        st.header("📷 Deteksi Real-time dengan Kamera")
-        st.markdown("Arahkan kamera ke daun kedelai - **deteksi otomatis berjalan**")
-        
-        # Info bar
-        col1, col2 = st.columns(2)
-        with col1:
-            st.info("🎥 Kamera Aktif")
-        with col2:
-            st.info("⚡ Real-time Detection")
-        
+elif menu == "📷 Kamera Real-time":
+    st.header("📷 Deteksi Real-time dengan Kamera")
+    
+    # Tambahkan kontrol rotasi di sini
+    with st.sidebar:
         st.markdown("---")
+        st.subheader("🔄 Pengaturan Kamera")
+        rotate_option = st.selectbox(
+            "Orientasi Kamera",
+            ["Normal (0°)", "Rotasi 90°", "Rotasi 180°", "Rotasi 270°"],
+            index=2  # Default 180° karena Anda bilang kepala di atas
+        )
         
-        # Tempat video
-        video_placeholder = st.empty()
-        
-        # Tombol stop
-        col1, col2, col3 = st.columns(3)
-        with col2:
-            stop_button = st.button("⏹️ STOP KAMERA", type="primary")
-        
-        # Buka kamera
-        try:
-            cap = cv2.VideoCapture(0)
-            if not cap.isOpened():
-                st.error("❌ Tidak dapat mengakses kamera")
-            else:
-                # Loop deteksi
-                while not stop_button:
-                    ret, frame = cap.read()
-                    if not ret:
-                        st.error("Gagal membaca frame")
-                        break
-                    
-                    # Rotasi kamera (sesuaikan)
-                    frame = cv2.rotate(frame, cv2.ROTATE_180)
-                    
-                    # Deteksi YOLO
-                    results = model(frame)
-                    frame_detected = results[0].plot()
-                    
-                    # Konversi BGR ke RGB
-                    frame_rgb = cv2.cvtColor(frame_detected, cv2.COLOR_BGR2RGB)
-                    
-                    # Tampilkan
-                    video_placeholder.image(frame_rgb, channels="RGB", use_container_width=True)
+        # Mapping rotasi
+        rotate_map = {
+            "Normal (0°)": None,
+            "Rotasi 90°": cv2.ROTATE_90_CLOCKWISE,
+            "Rotasi 180°": cv2.ROTATE_180,
+            "Rotasi 270°": cv2.ROTATE_90_COUNTERCLOCKWISE
+        }
+        rotation = rotate_map[rotate_option]
+    
+    st.markdown("Arahkan kamera ke daun kedelai - **deteksi otomatis berjalan**")
+    
+    # Tempat video
+    video_placeholder = st.empty()
+    
+    # Tombol stop
+    col1, col2, col3 = st.columns(3)
+    with col2:
+        stop_button = st.button("⏹️ STOP KAMERA", type="primary")
+    
+    try:
+        cap = cv2.VideoCapture(0)
+        if not cap.isOpened():
+            st.error("❌ Tidak dapat mengakses kamera")
+        else:
+            # Loop deteksi
+            while not stop_button:
+                ret, frame = cap.read()
+                if not ret:
+                    break
                 
-                # Lepaskan kamera (TANPA destroyAllWindows)
-                cap.release()
-                st.success("✅ Kamera dimatikan")
+                # Terapkan rotasi sesuai pilihan user
+                if rotation is not None:
+                    frame = cv2.rotate(frame, rotation)
                 
-        except Exception as e:
-            st.error(f"Error kamera: {e}")
+                # Deteksi YOLO
+                results = model(frame)
+                frame_detected = results[0].plot()
+                
+                # Konversi BGR ke RGB
+                frame_rgb = cv2.cvtColor(frame_detected, cv2.COLOR_BGR2RGB)
+                
+                # Tampilkan
+                video_placeholder.image(frame_rgb, channels="RGB", use_container_width=True)
+            
+            cap.release()
+            st.success("✅ Kamera dimatikan")
+            
+    except Exception as e:
+        st.error(f"Error kamera: {e}")
     
     # ============= MODE INFORMASI =============
     else:
@@ -184,3 +193,4 @@ st.markdown(
     "<center>© 2026 | Deteksi Penyakit Daun Kedelai | Universitas Islam Indonesia</center>",
     unsafe_allow_html=True
 )
+
