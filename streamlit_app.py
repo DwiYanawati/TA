@@ -183,17 +183,18 @@ if model is not None:
             with col1:
                 st.markdown("**📤 Upload Gambar**")
                 st.write("""
-                1. **Upload gambar** daun kedelai
-                2. **Sistem memproses** gambar menggunakan AI
-                3. **Hasil deteksi** ditampilkan dengan bounding box
+                1. Upload gambar daun kedelai
+                2. Sistem memproses gambar 
+                3. Hasil deteksi ditampilkan dengan bounding box
+                4. Detail deteksi (nama penyakit, confidence) ditampilkan
                 """)
             
             with col2:
                 st.markdown("**📷 Kamera Real-time**")
                 st.write("""
-                1. **Akses kamera** diizinkan
-                2. **Frame diproses** langsung (real-time)
-                3. **Bounding box** muncul otomatis di video
+                1. Akses kamera diizinkan
+                2. Frame diproses langsung (real-time)
+                3. Bounding box muncul otomatis di video
                 """)
         
         with tab3:
@@ -212,3 +213,4 @@ st.markdown(
     "<center>© 2026 | Deteksi Penyakit Daun Kedelai | Universitas Islam Indonesia</center>",
     unsafe_allow_html=True
 )
+
