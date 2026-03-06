@@ -171,8 +171,6 @@ if model is not None:
         - 📤 Upload gambar untuk deteksi
         - 📷 Kamera real-time langsung
         - ℹ️ Informasi sistem
-        
-        **Dikembangkan untuk:** Skripsi/Tugas Akhir
         """)
 
 else:
@@ -184,3 +182,4 @@ st.markdown(
     "<center>© 2026 | Deteksi Penyakit Daun Kedelai | Universitas Islam Indonesia</center>",
     unsafe_allow_html=True
 )
+
