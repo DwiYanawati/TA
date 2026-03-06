@@ -130,9 +130,6 @@ if model is not None:
                         st.error("Gagal membaca frame")
                         break
                     
-                    # Rotasi kamera (sesuaikan)
-                    frame = cv2.rotate(frame, cv2.ROTATE_180)
-                    
                     # Deteksi YOLO
                     results = model(frame)
                     frame_detected = results[0].plot()
@@ -151,7 +148,7 @@ if model is not None:
             st.error(f"Error kamera: {e}")
     
     # ============= MODE INFORMASI =============
-    else:
+    else:  # menu == "ℹ️ Informasi"
         st.header("ℹ️ Informasi Sistem")
         
         col1, col2, col3 = st.columns(3)
@@ -163,18 +160,51 @@ if model is not None:
             st.metric("Fitur", "Upload & Kamera", "Real-time")
         
         st.markdown("---")
-        st.subheader("Tentang Aplikasi")
-        st.write("""
-        Aplikasi ini menggunakan **YOLOv9** untuk mendeteksi penyakit pada daun kedelai.
         
-        **Fitur:**
-        - 📤 Upload gambar untuk deteksi
-        - 📷 Kamera real-time langsung
-        - ℹ️ Informasi sistem
-        """)
-
-else:
-    st.error("❌ Gagal memuat model. Pastikan file best.pt ada di folder yang benar.")
+        # TABS untuk Informasi
+        tab1, tab2, tab3 = st.tabs(["📖 Tentang", "🎯 Cara Kerja", "📊 Training"])
+        
+        with tab1:
+            st.subheader("📖 Tentang Aplikasi")
+            st.write("""
+            Aplikasi ini menggunakan **YOLOv9** untuk mendeteksi penyakit pada daun kedelai.
+            
+            **Model dilatih dengan:**
+            - 📁 Dataset penyakit daun kedelai
+            - 🧠 Arsitektur YOLOv9
+            - 🔧 Framework Ultralytics
+            """)
+        
+        with tab2:
+            st.subheader("🎯 Cara Kerja")
+            
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                st.markdown("**📤 Upload Gambar**")
+                st.write("""
+                1. **Upload gambar** daun kedelai
+                2. **Sistem memproses** gambar menggunakan AI
+                3. **Hasil deteksi** ditampilkan dengan bounding box
+                """)
+            
+            with col2:
+                st.markdown("**📷 Kamera Real-time**")
+                st.write("""
+                1. **Akses kamera** diizinkan
+                2. **Frame diproses** langsung (real-time)
+                3. **Bounding box** muncul otomatis di video
+                """)
+        
+        with tab3:
+            st.subheader("📊 Model Training")
+            st.write("""
+            **Dataset:** Penyakit Daun Kedelai (5 kelas)
+            **Arsitektur:** YOLOv9
+            **Framework:** Ultralytics
+            """)
+        
+        st.markdown("---") 
 
 # Footer
 st.markdown("---")
@@ -182,4 +212,3 @@ st.markdown(
     "<center>© 2026 | Deteksi Penyakit Daun Kedelai | Universitas Islam Indonesia</center>",
     unsafe_allow_html=True
 )
-
