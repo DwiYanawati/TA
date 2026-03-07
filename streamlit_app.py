@@ -95,58 +95,63 @@ if model is not None:
                     else:
                         st.warning("Tidak ada penyakit yang terdeteksi")
     
-    # ============= MODE KAMERA REAL-TIME =============
+        # ============= MODE KAMERA REAL-TIME (WEBCAM USER) =============
     elif menu == "📷 Kamera Real-time":
         st.header("📷 Deteksi Real-time dengan Kamera")
         st.markdown("Arahkan kamera ke daun kedelai - **deteksi otomatis berjalan**")
         
+        # Import library webrtc
+        from streamlit_webrtc import webrtc_streamer, VideoProcessorBase, WebRtcMode
+        import av
+        
         # Info bar
         col1, col2 = st.columns(2)
         with col1:
-            st.info("🎥 Kamera Aktif")
+            st.info("🎥 Kamera User")
         with col2:
             st.info("⚡ Real-time Detection")
         
         st.markdown("---")
         
-        # Tempat video
-        video_placeholder = st.empty()
-        
-        # Tombol stop
-        col1, col2, col3 = st.columns(3)
-        with col2:
-            stop_button = st.button("⏹️ STOP KAMERA", type="primary")
-        
-        # Buka kamera
-        try:
-            cap = cv2.VideoCapture(0)
-            if not cap.isOpened():
-                st.error("❌ Tidak dapat mengakses kamera")
-            else:
-                # Loop deteksi
-                while not stop_button:
-                    ret, frame = cap.read()
-                    if not ret:
-                        st.error("Gagal membaca frame")
-                        break
-                    
-                    # Deteksi YOLO
-                    results = model(frame)
-                    frame_detected = results[0].plot()
-                    
-                    # Konversi BGR ke RGB
-                    frame_rgb = cv2.cvtColor(frame_detected, cv2.COLOR_BGR2RGB)
-                    
-                    # Tampilkan
-                    video_placeholder.image(frame_rgb, channels="RGB", use_container_width=True)
+        # Class untuk memproses video
+        class VideoProcessor(VideoProcessorBase):
+            def __init__(self):
+                self.model = model
+                self.threshold = 0.5
+            
+            def recv(self, frame):
+                # Konversi frame ke format yang bisa diproses
+                img = frame.to_ndarray(format="bgr24")
                 
-                # Lepaskan kamera (TANPA destroyAllWindows)
-                cap.release()
-                st.success("✅ Kamera dimatikan")
+                # Deteksi dengan YOLO
+                if self.model is not None:
+                    results = self.model(img)
+                    img = results[0].plot()
                 
-        except Exception as e:
-            st.error(f"Error kamera: {e}")
-    
+                # Kembalikan frame yang sudah diproses
+                return av.VideoFrame.from_ndarray(img, format="bgr24")
+        
+        # Konfigurasi WebRTC
+        rtc_config = {
+            "iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]
+        }
+        
+        # Tampilkan streamer
+        ctx = webrtc_streamer(
+            key="yolo-detection",
+            mode=WebRtcMode.SENDRECV,
+            rtc_configuration=rtc_config,
+            video_processor_factory=VideoProcessor,
+            media_stream_constraints={"video": True, "audio": False},
+            async_processing=True,
+        )
+        
+        if ctx.video_processor:
+            ctx.video_processor.model = model
+        
+        st.markdown("---")
+        st.caption("💡 Klik 'START' untuk mengaktifkan kamera. Izinkan akses kamera di browser Anda.")
+        
     # ============= MODE INFORMASI =============
     else:  # menu == "ℹ️ Informasi"
         st.header("ℹ️ Informasi Sistem")
@@ -213,5 +218,6 @@ st.markdown(
     "<center>© 2026 | Deteksi Penyakit Daun Kedelai | Universitas Islam Indonesia</center>",
     unsafe_allow_html=True
 )
+
 
 
