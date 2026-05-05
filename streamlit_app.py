@@ -48,12 +48,12 @@ def load_model():
         st.error(f"Error loading model: {e}")
         return None
 
-# Load model 
-    with st.spinner("Loading model..."): 
-        model = load_model() 
-        
-    if model is not None: 
-       st.sidebar.success("✅ Model siap digunakan!") 
+# Load model
+with st.spinner("Loading model..."):
+    model = load_model()
+
+if model is not None:
+    st.sidebar.success("✅ Model siap digunakan!")
     
     # ============= MODE UPLOAD GAMBAR =============
     if menu == "📤 Upload Gambar":
