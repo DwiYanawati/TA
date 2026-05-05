@@ -47,7 +47,14 @@ def load_model():
     except Exception as e:
         st.error(f"Error loading model: {e}")
         return None
+
+    # Load model 
+    with st.spinner("Loading model..."): 
+        model = load_model() 
         
+    if model is not None: 
+       s t.sidebar.success("✅ Model siap digunakan!") 
+    
     # ============= MODE UPLOAD GAMBAR =============
     if menu == "📤 Upload Gambar":
         st.header("📤 Upload Gambar untuk Deteksi")
