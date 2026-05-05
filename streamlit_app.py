@@ -53,7 +53,7 @@ def load_model():
         model = load_model() 
         
     if model is not None: 
-       s t.sidebar.success("✅ Model siap digunakan!") 
+       st.sidebar.success("✅ Model siap digunakan!") 
     
     # ============= MODE UPLOAD GAMBAR =============
     if menu == "📤 Upload Gambar":
