@@ -20,7 +20,7 @@ st.markdown("Aplikasi deteksi penyakit pada daun kedelai menggunakan **YOLOv9**"
 # Sidebar
 with st.sidebar:
     st.header("Menu")
-    menu = st.radio("Pilih Mode:", ["📤 Upload Gambar", "📷 Kamera Real-Time", "ℹ️ Informasi"])
+    menu = st.radio("Pilih Mode:", ["📤 Upload Gambar", "📷 Kamera Real-time", "ℹ️ Informasi"])
     
     st.markdown("---")
     st.subheader("Cara Penggunaan")
@@ -31,8 +31,8 @@ with st.sidebar:
         2. Upload foto daun kedelai
         3. Klik tombol deteksi
         
-        **Kamera Real-Time:**
-        1. Pilih mode **Kamera Real-Time**
+        **Kamera Real-time:**
+        1. Pilih mode **Kamera Real-time**
         2. Izinkan akses kamera
         3. Deteksi otomatis berjalan
         """
