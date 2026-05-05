@@ -167,50 +167,37 @@ if model is not None:
         st.markdown("---")
         
         # TABS untuk Informasi
-        tab1, tab2, tab3 = st.tabs(["📖 Tentang", "🎯 Cara Kerja", "📊 Training"])
+        tab1, tab2 = st.tabs(["Tentang Aplikasi", "Cara Kerja"])
         
         with tab1:
-            st.subheader("📖 Tentang Aplikasi")
+            st.subheader("Tentang Aplikasi")
             st.write("""
-            Aplikasi ini menggunakan **YOLOv9** untuk mendeteksi penyakit pada daun kedelai.
-            
             **Model dilatih dengan:**
-            - Dataset penyakit daun kedelai
+            - Dataset Penyakit Daun Kedelai
             - Arsitektur YOLOv9
             - Framework Ultralytics
             """)
         
         with tab2:
-            st.subheader("🎯 Cara Kerja")
+            st.subheader("Cara Kerja")
             
             col1, col2 = st.columns(2)
             
             with col1:
-                st.markdown("**📤 Upload Gambar**")
+                st.markdown("**📤 Upload Gambar:**")
                 st.write("""
                 1. Upload gambar daun kedelai
                 2. Sistem memproses gambar 
                 3. Hasil deteksi ditampilkan dengan bounding box
-                4. Detail deteksi (nama penyakit, confidence) ditampilkan
                 """)
             
             with col2:
-                st.markdown("**📷 Kamera Real-time**")
+                st.markdown("**📷 Kamera Real-time:**")
                 st.write("""
                 1. Akses kamera diizinkan
                 2. Frame diproses langsung (real-time)
-                3. Bounding box muncul otomatis di video
+                3. Hasil deteksi ditampilkan otomatis pada video dengan bounding box 
                 """)
-        
-        with tab3:
-            st.subheader("📊 Model Training")
-            st.write("""
-            **Dataset:** Penyakit Daun Kedelai (5 kelas)
-            **Arsitektur:** YOLOv9
-            **Framework:** Ultralytics
-            """)
-        
-        st.markdown("---") 
 
 # Footer
 st.markdown("---")
