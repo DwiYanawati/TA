@@ -5,3 +5,4 @@ pillow
 ultralytics
 numpy
 av
+tornado==6.3.3
