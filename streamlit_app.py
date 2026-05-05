@@ -20,7 +20,7 @@ st.markdown("Aplikasi deteksi penyakit pada daun kedelai menggunakan **YOLOv9**"
 # Sidebar
 with st.sidebar:
     st.header("Menu")
-    menu = st.radio("Pilih Mode:", ["📤 Upload Gambar", "📷 Kamera Real-time", "ℹ️ Informasi"])
+    menu = st.radio("Pilih Mode:", ["📤 Upload Gambar", "📷 Kamera Real-Time", "ℹ️ Informasi"])
     
     st.markdown("---")
     st.subheader("Cara Penggunaan")
@@ -31,8 +31,8 @@ with st.sidebar:
         2. Upload foto daun kedelai
         3. Klik tombol deteksi
         
-        **Kamera Real-time:**
-        1. Pilih mode **Kamera Real-time**
+        **Kamera Real-Time:**
+        1. Pilih mode **Kamera Real-Time**
         2. Izinkan akses kamera
         3. Deteksi otomatis berjalan
         """
@@ -47,14 +47,7 @@ def load_model():
     except Exception as e:
         st.error(f"Error loading model: {e}")
         return None
-
-# Load model
-with st.spinner("Loading model..."):
-    model = load_model()
-
-if model is not None:
-    st.sidebar.success("✅ Model siap digunakan!")
-    
+        
     # ============= MODE UPLOAD GAMBAR =============
     if menu == "📤 Upload Gambar":
         st.header("📤 Upload Gambar untuk Deteksi")
