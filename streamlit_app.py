@@ -48,7 +48,7 @@ def load_model():
         st.error(f"Error loading model: {e}")
         return None
 
-    # Load model 
+# Load model 
     with st.spinner("Loading model..."): 
         model = load_model() 
         
