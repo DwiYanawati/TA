@@ -172,10 +172,9 @@ if model is not None:
         with tab1:
             st.subheader("Tentang Aplikasi")
             st.write("""
-            **Model dilatih dengan:**
-            - Dataset Penyakit Daun Kedelai
-            - Arsitektur YOLOv9
-            - Framework Ultralytics
+            Aplikasi ini digunakan untuk mendeteksi penyakit daun kedelai secara otomatis menggunakan model YOLOv9 berbasis deep learning.
+            Model dilatih menggunakan dataset citra penyakit daun kedelai melalui framework Ultralytics, sehingga mampu melakukan deteksi secara cepat dan akurat.
+            Fitur yang tersedia meliputi upload gambar dan deteksi real-time menggunakan kamera. 
             """)
         
         with tab2:
@@ -186,17 +185,19 @@ if model is not None:
             with col1:
                 st.markdown("**📤 Upload Gambar:**")
                 st.write("""
-                1. Upload gambar daun kedelai
-                2. Sistem memproses gambar 
-                3. Hasil deteksi ditampilkan dengan bounding box
+                1. Pengguna mengunggah gambar daun kedelai
+                2. Sistem memproses gambar menggunakan model YOLOv9
+                3. Model mendeteksi area yang terindikasi penyakit
+                4. Hasil deteksi ditampilkan dalam bentuk bounding box dan label kelas
                 """)
             
             with col2:
                 st.markdown("**📷 Kamera Real-time:**")
                 st.write("""
-                1. Akses kamera diizinkan
-                2. Frame diproses langsung (real-time)
-                3. Hasil deteksi ditampilkan otomatis pada video dengan bounding box 
+                1. Pengguna mengaktifkan kamera melalui browser
+                2. Setiap frame video diproses secara real-time
+                3. Model YOLOv9 melakukan deteksi objek pada setiap frame
+                4. Hasil deteksi ditampilkan langsung pada video dengan bounding box
                 """)
 
 # Footer
